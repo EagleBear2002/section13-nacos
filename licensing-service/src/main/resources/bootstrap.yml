@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: licensingservice  #便于配置客户端知道正在查找哪个服务，对应到目录
+  profiles:
+    active:
+      default  #默认环境
+  cloud:
+    nacos:
+      config:
+        server-addr: nacos-headless:8848
+        file-extension: yml
+      discovery:
+        server-addr: nacos-headless:8848

@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: postgres:9.5
+          env:
+            - name: "POSTGRES_USER"
+              value: "postgres"
+            - name: "POSTGRES_PASSWORD"
+              value: "p0stgr@s"
+            - name: "POSTGRES_DB"
+              value: "eagle_eye_local"
+          ports:
+            - containerPort: 5432
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: database
+spec:
+  selector:
+    app: database
+  ports:
+    - port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organizationservice
+spec:
+  selector:
+    matchLabels:
+      app: organizationservice
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: organizationservice
+    spec:
+      containers:
+        - name: organizationservice
+          image: johncarnell/tmx-organization-service:section13
+          env:
+            - name: "PROFILE"
+              value: "default"
+            - name: "DATABASESERVER_PORT"
+              value: "5432"
+            - name: "ENCRYPT_KEY"
+              value: "IMSYMMETRIC"
+          ports:
+            - containerPort: 8080
+---
+#客户端只与注册服务打交道，没有访问到这个服务
+#kind: Service
+#apiVersion: v1
+#metadata:
+#  name: organizationservice
+#spec:
+#  selector:
+#    app: organizationservice
+#  ports:
+#    - port: 8080
+#      targetPort: 8080
+#---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: licensingservice
+spec:
+  selector:
+    matchLabels:
+      app: licensingservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: licensingservice
+    spec:
+      containers:
+        - name: licensingservice
+          image: johncarnell/tmx-licensing-service:section13
+          env:
+            - name: "PROFILE"
+              value: "default"
+            - name: "DATABASESERVER_PORT"
+              value: "5432"
+            - name: "ENCRYPT_KEY"
+              value: "IMSYMMETRIC"
+          ports:
+            - containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: licensingservice
+spec:
+  selector:
+    app: licensingservice
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: section13-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: www.license.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: licensingservice
+                port:
+                  number: 8080

@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: organizationservice
+  profiles:
+    active:
+      default
+  cloud:
+    nacos:
+      config:
+        server-addr: nacos-headless:8848
+        file-extension: yml
+      discovery:
+        server-addr: nacos-headless:8848

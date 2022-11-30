@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: postgres:9.5
+          env:
+            - name: "POSTGRES_USER"
+              value: "postgres"
+            - name: "POSTGRES_PASSWORD"
+              value: "p0stgr@s"
+            - name: "POSTGRES_DB"
+              value: "eagle_eye_local"
+          ports:
+            - containerPort: 5432
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: database
+spec:
+  selector:
+    app: database
+  ports:
+    - port: 5432
+      targetPort: 5432

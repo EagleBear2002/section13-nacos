@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organizationservice
+spec:
+  selector:
+    matchLabels:
+      app: organizationservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: organizationservice
+    spec:
+      containers:
+        - name: organizationservice
+          image: johncarnell/tmx-organization-service:section13
+          env:
+            - name: "PROFILE"
+              value: "default"
+            - name: "DATABASESERVER_PORT"
+              value: "5432"
+            - name: "ENCRYPT_KEY"
+              value: "IMSYMMETRIC"
+          ports:
+            - containerPort: 8080
+---
+#客户端只与注册服务打交道，没有访问到这个服务
+#kind: Service
+#apiVersion: v1
+#metadata:
+#  name: organizationservice
+#spec:
+#  selector:
+#    app: organizationservice
+#  ports:
+#    - port: 8085
+#      targetPort: 8085
+#---
