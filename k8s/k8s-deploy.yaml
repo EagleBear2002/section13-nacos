@@ -44,7 +44,7 @@ spec:
   selector:
     matchLabels:
       app: organizationservice
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:

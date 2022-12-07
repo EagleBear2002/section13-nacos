@@ -1,7 +1,5 @@
 package com.thoughtmechanix.licenses;
 
-import com.netflix.loadbalancer.IRule;
-import com.netflix.loadbalancer.RandomRule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -25,8 +23,4 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @Bean
-    public IRule ribbonRule() {
-        return new RandomRule();
-    }
 }

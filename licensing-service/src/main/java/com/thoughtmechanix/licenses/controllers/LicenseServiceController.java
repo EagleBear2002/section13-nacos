@@ -30,14 +30,14 @@ public class LicenseServiceController {
     }
 
     @RequestMapping(value="/{licenseId}",method = RequestMethod.GET)
-    public License getLicenses( @PathVariable("organizationId") String organizationId,
+    public License getLicense( @PathVariable("organizationId") String organizationId,
                                 @PathVariable("licenseId") String licenseId) {
 
         return licenseService.getLicense(organizationId, licenseId, "");
     }
 
     @RequestMapping(value="/{licenseId}/{clientType}",method = RequestMethod.GET)
-    public License getLicensesWithClient( @PathVariable("organizationId") String organizationId,
+    public License getLicenseWithClient( @PathVariable("organizationId") String organizationId,
                                           @PathVariable("licenseId") String licenseId,
                                           @PathVariable("clientType") String clientType) {
 
