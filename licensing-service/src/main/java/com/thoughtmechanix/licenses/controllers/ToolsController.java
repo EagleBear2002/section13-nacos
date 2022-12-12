@@ -19,4 +19,11 @@ public class ToolsController {
 
         return discoveryService.getEurekaServices();
     }
+//    客户端返回的结果：
+//    [
+//            "licensingservice:http://10.1.3.226:8080",
+//            "organizationservice:http://10.1.3.224:8080",
+//            "organizationservice:http://10.1.3.228:8080",
+//            "organizationservice:http://10.1.3.227:8080"
+//            ]
 }

@@ -2,10 +2,10 @@ server:
   port: 8080
 spring:
   application:
-    name: licensingservice  #便于配置客户端知道正在查找哪个服务，对应到目录
+    name: licensingservice
   profiles:
     active:
-      default  #默认环境
+      default
   cloud:
     nacos:
       config:

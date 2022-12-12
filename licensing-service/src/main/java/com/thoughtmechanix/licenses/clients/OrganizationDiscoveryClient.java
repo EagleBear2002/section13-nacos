@@ -25,6 +25,7 @@ public class OrganizationDiscoveryClient {
         if (instances.size() == 0) return null;
         String serviceUri = String.format("%s/v1/organizations/%s", instances.get(0).getUri().toString(), organizationId);
         System.out.println("!!!! SERVICE URI:  " + serviceUri);
+//        http://10.1.3.224:8080/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a
 
 
         ResponseEntity<Organization> restExchange =
