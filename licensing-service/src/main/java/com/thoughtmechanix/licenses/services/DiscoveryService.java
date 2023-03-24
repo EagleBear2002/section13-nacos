@@ -17,7 +17,7 @@ public class DiscoveryService {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-    public List getEurekaServices() {
+    public List getNacosServices() {
         List<String> services = new ArrayList<String>();
 
         discoveryClient.getServices().forEach(serviceName -> {

@@ -14,10 +14,10 @@ public class ToolsController {
     @Autowired
     private DiscoveryService discoveryService;
 
-    @RequestMapping(value="/eureka/services",method = RequestMethod.GET)
-    public List<String> getEurekaServices() {
+    @RequestMapping(value="/nacos/services",method = RequestMethod.GET)
+    public List<String> getNacosServices() {
 
-        return discoveryService.getEurekaServices();
+        return discoveryService.getNacosServices();
     }
 //    客户端返回的结果：
 //    [

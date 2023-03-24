@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Optional;
 
 @RestController
@@ -20,10 +22,16 @@ public class OrganizationServiceController {
     @Autowired
     private OrganizationService orgService;
 
-
     @RequestMapping(value = "/{organizationId}", method = RequestMethod.GET)
     public Organization getOrganization(@PathVariable("organizationId") String organizationId) {
-        System.out.println("====================");
+
+        try {
+            InetAddress address = InetAddress.getLocalHost();
+            System.out.println("============================  "+address.getHostAddress());
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+
         Optional<Organization> foundOrganization = orgService.getOrg(organizationId);
         return foundOrganization
                 .map(organization -> organization)
